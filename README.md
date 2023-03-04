@@ -11,3 +11,11 @@ a backend finance app
 - update expenses
 - delete expenses
 - categorize each expense
+
+## Techs I want to use
+
+- Typescript
+- AdonisJs
+- PostgresSQL
+- Docker
+- JWT
