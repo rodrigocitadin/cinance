@@ -15,7 +15,8 @@ a backend finance app
 ## Techs I want to use
 
 - Typescript
-- AdonisJs
+- NestJs
+- Prisma
 - PostgresSQL
 - Docker
 - JWT
