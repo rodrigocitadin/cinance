@@ -32,11 +32,11 @@ export class UserController {
 
   @Put(':id')
   async update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
-    return 'TODO';
+    return await this.userService.updateUser(id, updateUserDto);
   }
 
   @Delete(':id')
   async remove(@Param('id') id: string) {
-    return 'TODO';
+    await this.userService.deleteUser(id);
   }
 }
