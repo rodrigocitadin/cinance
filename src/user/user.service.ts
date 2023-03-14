@@ -11,19 +11,22 @@ export class UserService {
   }
 
   async findById(id: string): Promise<User> {
-    const user = await this.prisma.user.findFirst({ where: { id } });
+    return await this.prisma.user.findUniqueOrThrow({ where: { id } });
+  }
 
-    if (!user) {
+  // TODO: Check data before user creation
+  async createUser(data: Prisma.UserCreateInput): Promise<User> {
+    const { cpf, email } = data;
+
+    const userAlreadyExists = await this.prisma.user.findMany({ where: { cpf, email }});
+
+    if (userAlreadyExists) {
       throw new HttpException(
-        { message: 'User not found' },
+        { message: 'User already exists' },
         HttpStatus.BAD_REQUEST,
       );
     }
 
-    return user;
-  }
-
-  async createUser(data: Prisma.UserCreateInput): Promise<User> {
     return await this.prisma.user.create({
       data,
     });
