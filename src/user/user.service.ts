@@ -18,11 +18,24 @@ export class UserService {
   async createUser(data: Prisma.UserCreateInput): Promise<User> {
     const { cpf, email } = data;
 
-    const userAlreadyExists = await this.prisma.user.findMany({ where: { cpf, email }});
+    const cpfAlreadyExists = await this.prisma.user.findFirst({
+      where: { cpf },
+    });
 
-    if (userAlreadyExists) {
+    if (cpfAlreadyExists) {
       throw new HttpException(
-        { message: 'User already exists' },
+        { error: 'User with this cpf already exists' },
+        HttpStatus.BAD_REQUEST,
+      );
+    }
+
+    const emailAlreadyExists = await this.prisma.user.findFirst({
+      where: { email },
+    });
+
+    if (emailAlreadyExists) {
+      throw new HttpException(
+        { error: 'User with this email already exists' },
         HttpStatus.BAD_REQUEST,
       );
     }
